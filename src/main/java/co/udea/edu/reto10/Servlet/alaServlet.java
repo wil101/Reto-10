@@ -14,20 +14,21 @@ public class alaServlet extends HttpServlet{
 @Override
     protected void doGet(HttpServletRequest request,HttpServletResponse response)
         throws ServletException, IOException{
-       Integer numero;
-        if(request.getParameter("numero").isEmpty()){
-            numero = 0;
-        } else if(request.getParameter("numero").getClass().toString().compareTo("class java.lang.Integer") != 0){
-            numero = -10;
-        }
-        else{
+       Integer numero = 1;
+       int factorial = 1;
+       int aux = 1;
+        try{
             numero = Integer.valueOf(request.getParameter("numero"));
+            if (numero < 0) {
+                factorial = 0;
+            } else {
+                factorial = factorial(numero);
+            }
+        } catch(NumberFormatException e){
+            aux = -1;
         }
-        int factorial;
-        if(numero < 0){
-            factorial = 0;
-        } else{
-            factorial = factorial(numero);
+        if(request.getParameter("numero").isEmpty()){
+            aux = 0;
         }
         response.setContentType("text/html;charset=UTF-8");
         try(PrintWriter out = response.getWriter()){
@@ -38,13 +39,21 @@ public class alaServlet extends HttpServlet{
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Resultado</h1>");
-            if(numero < 0){
-                out.println("<p>El número ingresado debe ser mayor que cero</p>");
-            } else if (numero == 0) {
-                out.println("<p>El campo no debe quedar vacío </p>");
-            }else{
-                out.println("<p>El factorial de " + numero + " es " + factorial + "</p>");
-            }
+           switch (aux) {
+               case 0:
+                   out.println("<p>El campo no debe quedar vacío </p>");
+                   break;
+               case -1:
+                   out.println("<p>El dato que ingresó no es un número</p>");
+                   break;
+               default:
+                   if (factorial == 0) {
+                       out.println("<p>El número ingresado debe ser mayor que cero</p>");
+                   }else{
+                           out.println("<p>El factorial de " + numero + " es " + factorial + "</p>");
+                           }
+                   break;
+           }
             out.println("</body>");
             out.println("</html>");
         }catch(IOException e){
