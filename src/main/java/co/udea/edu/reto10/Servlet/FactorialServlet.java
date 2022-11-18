@@ -37,7 +37,7 @@ public class FactorialServlet extends HttpServlet{
             out.println("<head>");
             out.println("<title>factorial</title>");
             out.println("</head>");
-            out.println("<body>");
+            out.println("<body style='padding: 40px'>");
             out.println("<h1>Resultado</h1>");
            switch (aux) {
                case 0:
@@ -54,6 +54,9 @@ public class FactorialServlet extends HttpServlet{
                            }
                    break;
            }
+            out.println("<br><br><br><br>");
+            out.println("<h3>Integrantes</h3>");
+            out.println("<p>Wilmar Osorio Usuga & Emanuel López Higuita</p>");
             out.println("</body>");
             out.println("</html>");
         }catch(IOException e){
